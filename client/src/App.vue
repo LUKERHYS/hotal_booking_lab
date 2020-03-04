@@ -1,23 +1,42 @@
 <template>
   <div id="app">
     <bookings-form />
-
-    <bookings-table />
+    <bookings-table :bookings="bookings"/>
   </div>
 </template>
 
 <script>
-
+import {eventBus} from './main.js';
+import BookingsTable from '@/components/BookingsTable.vue';
+import BookingsForm from '@/components/BookingsForm.vue';
+import BookingService from '@/services/BookingService.js';
 
 export default {
-  name: 'App',
-  data: {
-    return(){
+  data() {
+    return {
       bookings: []
     }
   },
   components: {
-
+    'bookings-table': BookingsTable,
+    'bookings-form': BookingsForm,
+  },
+  mounted() {
+    this.fetchBookings();
+    eventBus.$on('delete-booking', id => {
+      BookingService.deleteBooking(id)
+      .then(() => {
+        const index = this.bookings.findIndex(booking => booking._id === id);
+        this.bookings.splice(index, 1);
+      })
+    })
+    // eventBus.$on('submitBooking')
+  },
+  methods: {
+    fetchBookings() {
+      BookingService.getBookings()
+      .then(bookings => this.bookings = bookings);
+    }
   }
 }
 </script>
