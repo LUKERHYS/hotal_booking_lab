@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <bookings-form />
-    <h1>ayyyyyy</h1>
+
     <bookings-table />
   </div>
 </template>
