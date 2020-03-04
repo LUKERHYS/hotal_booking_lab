@@ -30,7 +30,10 @@ export default {
         this.bookings.splice(index, 1);
       })
     })
-    // eventBus.$on('submitBooking')
+    eventBus.$on('submit-booking', payload => {
+      BookingService.postBooking(payload)
+      .then(booking => this.bookings.push(booking));
+    })
   },
   methods: {
     fetchBookings() {

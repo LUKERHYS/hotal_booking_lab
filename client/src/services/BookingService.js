@@ -10,7 +10,7 @@ export default {
   postBooking(payload){
     return fetch(baseURL, {
       method: 'POST',
-      body: JSON.stingify(payload),
+      body: JSON.stringify(payload),
       headers: {'Content-Type': 'application/json'}
     })
     .then(res => res.json())
